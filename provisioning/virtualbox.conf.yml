@@ -1,11 +1,11 @@
 ---
-box: "ubuntu/trusty64"
+box: "miguel/ubuntu-16.04"
 allinone:
   short_name: "allinone"
   host_name: "allinone.devstack.dev"
   ip: "192.168.33.12"
   memory: 8192
   cpus: 2
-  vlan_interface: "eth2"
+  vlan_interface: "enp0s9"
   physical_network: "physnet1"
   mtu: 1500

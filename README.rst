@@ -77,8 +77,27 @@ resources can be changed in the ``provisioning/virtualbox.conf.yml`` file.
 Deployment
 ----------
 
-#. Install `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_ and
-   `Vagrant <https://www.vagrantup.com/downloads.html>`_.
+#. Install `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_,
+   `Vagrant <https://www.vagrantup.com/downloads.html>`_ and
+   `Packer https://www.packer.io/docs/install/index.html`_.
+
+#. To be able to create Ubuntu 16.04 boxes for Vagrant with enough disk space
+   to support devstack, clone this repository into your home directory and
+   change to it::
+
+     $ git clone https://github.com/chef/bento
+     $ cd bento
+
+#. Create a fresh Ubuntu 16.04 box and load it to Vagrant. It is recommended
+   to perform this step peridiocally so devstack is always built on an up to
+   date operating system. The commands to do this are::
+
+     $ packer build -only=virtualbox-iso ubuntu-16.04-amd64.json
+     $ vagrant box add builds/ubuntu-16.04.virtualbox.box --name miguel/ubuntu-16.04 --force
+
+     .. note::
+     The value provided to the --name option in the last command can be changed
+     to any valid string.
 
 #. Clone the ``nova`` and ``neutron`` repositories into your home directory::
 
@@ -94,6 +113,11 @@ Deployment
 
      $ vagrant plugin install vagrant-cachier
      $ vagrant plugin install vagrant-vbguest
+
+#. Update in ``provisioning/virtualbox.conf.yml`` the name of box to be used by
+   Vagrant, as specified in previous step::
+
+     box: "miguel/ubuntu-16.04"
 
 #. If necessary, adjust any configuration in the
    ``provisioning/virtualbox.conf.yml`` file.
@@ -127,6 +151,8 @@ Deployment
      
      $ vagrant suspend
 
-#. After completing your tasks, you can destroy the configuration::
+#. Periodically, it will be necessary to re-build devstack from scratch. When
+   that happens, you can destroy the configuration and perform the steps in
+   this guide again::
 
      $ vagrant destroy

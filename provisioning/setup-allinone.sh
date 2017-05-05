@@ -10,7 +10,7 @@ cp /vagrant/provisioning/local.conf.base devstack/local.conf
 DESIGNATE_ZONE=my-domain.org.
 
 # Get the IP address
-ipaddress=$(ip -4 addr show eth1 | grep -oP "(?<=inet ).*(?=/)")
+ipaddress=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)")
 
 # Create bridges for Vlan type networks
 sudo ifconfig $VLAN_INTERFACE 0.0.0.0 up
