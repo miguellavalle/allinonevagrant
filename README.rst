@@ -79,7 +79,7 @@ Deployment
 
 #. Install `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_,
    `Vagrant <https://www.vagrantup.com/downloads.html>`_ and
-   `Packer https://www.packer.io/docs/install/index.html`_.
+   `Packer <https://www.packer.io/docs/install/index.html>`_.
 
 #. To be able to create Ubuntu 16.04 boxes for Vagrant with enough disk space
    to support devstack, clone this repository into your home directory and
@@ -95,9 +95,8 @@ Deployment
      $ packer build -only=virtualbox-iso ubuntu-16.04-amd64.json
      $ vagrant box add builds/ubuntu-16.04.virtualbox.box --name miguel/ubuntu-16.04 --force
 
-     .. note::
-     The value provided to the --name option in the last command can be changed
-     to any valid string.
+     The value provided to the --name option in the second command can be
+     changed to any valid string.
 
 #. Clone the ``nova`` and ``neutron`` repositories into your home directory::
 
@@ -114,8 +113,8 @@ Deployment
      $ vagrant plugin install vagrant-cachier
      $ vagrant plugin install vagrant-vbguest
 
-#. Update in ``provisioning/virtualbox.conf.yml`` the name of box to be used by
-   Vagrant, as specified in previous step::
+#. Update in ``provisioning/virtualbox.conf.yml`` the name of the box to be
+   used by Vagrant, as specified in previous step::
 
      box: "miguel/ubuntu-16.04"
 
@@ -144,7 +143,7 @@ Deployment
 
    .. note::
    By default, OpenStack includes two accounts: ``admin`` and ``demo``, both
-   using password ``devstack``. Keystone has been configured to issue token
+   using password ``devstack``. Keystone has been configured to issue tokens
    with a life of 1 year.
 
 #. You can save the state of the entire configuration::
