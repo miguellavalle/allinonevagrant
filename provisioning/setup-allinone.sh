@@ -28,7 +28,7 @@ HOST_IP=$ipaddress
 disable_service n-net
 enable_service placement-api
 enable_service neutron
-enable_service q-svc
+enable_service neutron-api
 enable_service q-meta
 enable_service q-agt
 enable_service q-dhcp
