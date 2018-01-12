@@ -3,6 +3,9 @@
 # Script Arguments:
 # $1 -  Interface for Vlan type networks
 # $2 -  Physical network for Vlan type networks interface in allinone and compute1 "rack"
+# Interface equivalences:
+# eth1 -> enp0s8 
+# eth2 -> enp0s9
 VLAN_INTERFACE=$1
 PHYSICAL_NETWORK=$2
 
@@ -10,7 +13,7 @@ cp /vagrant/provisioning/local.conf.base devstack/local.conf
 DESIGNATE_ZONE=my-domain.org.
 
 # Get the IP address
-ipaddress=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)")
+ipaddress=$(ip -4 addr show eth1 | grep -oP "(?<=inet ).*(?=/)")
 
 # Create bridges for Vlan type networks
 sudo ifconfig $VLAN_INTERFACE 0.0.0.0 up
@@ -57,7 +60,7 @@ ipv6_ptr_zone_prefix_size=116
 type_drivers=flat,vxlan,vlan
 tenant_network_types=vxlan,vlan
 mechanism_drivers=openvswitch,l2population
-extension_drivers=port_security,dns
+extension_drivers=port_security,dns_domain_ports
 
 [ml2_type_vxlan]
 vni_ranges=1000:1999

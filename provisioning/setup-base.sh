@@ -46,6 +46,7 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 let g:syntastic_auto_loc_list=1
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_quiet_messages = {"regex": "D10*"}
+color darkblue
 DEVSTACKEOF
 
 mkdir -p ~/.vim/autoload ~/.vim/bundle
