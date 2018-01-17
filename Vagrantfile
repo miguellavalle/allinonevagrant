@@ -47,6 +47,10 @@ Vagrant.configure(2) do |config|
            '--nicpromisc3', "allow-all"
           ]
        vb.customize [
+           'modifyvm', :id,
+           '--natdnshostresolver1', "on"
+          ]
+       vb.customize [
            "guestproperty", "set", :id,
            "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000
           ]
