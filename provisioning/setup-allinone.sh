@@ -47,13 +47,16 @@ external_dns_driver=designate
 
 [designate]
 url=http://$ipaddress:9001/v2
-admin_auth_url=http://$ipaddress:35357/v2.0
-admin_username=neutron
-admin_password=devstack
-admin_tenant_name=service
 allow_reverse_dns_lookup=True
 ipv4_ptr_zone_prefix_size=24
 ipv6_ptr_zone_prefix_size=116
+auth_type = password
+auth_url = http://$ipaddress/identity
+project_domain_name = default
+user_domain_name = default
+username = neutron
+password = devstack
+project_name = service
 
 [[post-config|/\$Q_PLUGIN_CONF_FILE]]
 [ml2]
