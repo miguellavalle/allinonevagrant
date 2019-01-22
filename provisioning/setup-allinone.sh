@@ -28,6 +28,8 @@ cat << DEVSTACKEOF >> devstack/local.conf
 HOST_IP=$ipaddress
 
 # Enable Neutron as the networking service
+disable_service mysql
+enable_service postgresql
 disable_service n-net
 enable_service placement-api
 enable_service neutron
@@ -42,7 +44,7 @@ enable_plugin neutron-tempest-plugin https://git.openstack.org/openstack/neutron
 
 [[post-config|\$NEUTRON_CONF]]
 [DEFAULT]
-service_plugins=router,segments
+service_plugins=router,segments,qos
 dns_domain=$DESIGNATE_ZONE 
 external_dns_driver=designate
 
@@ -64,7 +66,7 @@ project_name = service
 type_drivers=flat,vxlan,vlan
 tenant_network_types=vxlan,vlan
 mechanism_drivers=openvswitch,l2population
-extension_drivers=port_security,dns_domain_ports
+extension_drivers=port_security,dns_domain_ports,qos
 
 [ml2_type_vxlan]
 vni_ranges=1000:1999
@@ -79,10 +81,15 @@ bridge_mappings=$PHYSICAL_NETWORK:$bridge
 [agent]
 tunnel_types=vxlan
 l2_population=True
+extensions=qos
+dscp=8
 
 [[post-config|\$Q_L3_CONF_FILE]]
 [DEFAULT]
 router_delete_namespaces=True
+ovs_use_veth=True
+[agent]
+extensions=fip_qos
 
 [[post-config|\$Q_DHCP_CONF_FILE]]
 [DEFAULT]
