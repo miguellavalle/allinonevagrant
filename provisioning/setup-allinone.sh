@@ -28,8 +28,8 @@ cat << DEVSTACKEOF >> devstack/local.conf
 HOST_IP=$ipaddress
 
 # Enable Neutron as the networking service
-disable_service mysql
-enable_service postgresql
+# disable_service mysql
+# enable_service postgresql
 disable_service n-net
 enable_service placement-api
 enable_service neutron

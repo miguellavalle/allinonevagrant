@@ -1,9 +1,9 @@
 ---
-box: "miguel/ubuntu-16.04"
+box: "miguel/ubuntu-18.04"
 allinone:
   short_name: "allinone"
   host_name: "allinone.devstack.dev"
-  ip: "192.168.33.12"
+  ip: "192.168.33.72"
   memory: 8192
   cpus: 2
   vlan_interface: "eth2"
