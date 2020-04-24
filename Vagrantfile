@@ -6,8 +6,23 @@ require 'ipaddr'
 
 vagrant_config = YAML.load_file("provisioning/virtualbox.conf.yml")
 
+# check if proxy is enabled in host, so that environment can be passed
+# on otherwise firewall will block outside network
+use_proxy = !((ENV['http_proxy'].nil? || ENV['http_proxy'].empty?) &&
+              (ENV['https_proxy'].nil? || ENV['https_proxy'].empty?))
+
 Vagrant.configure(2) do |config|
   config.vm.box = vagrant_config['box']
+  if use_proxy
+    if Vagrant.has_plugin?("vagrant-proxyconf")
+      config.proxy.http = ENV['http_proxy']
+      config.proxy.https = ENV['https_proxy']
+      config.proxy.https = ENV['ftp_proxy']
+      config.proxy.no_proxy = ENV['no_proxy']
+    else
+      raise "vagrant-proxyconf (https://github.com/tmatilai/vagrant-proxyconf/) is not installed and proxy being used"
+    end
+  end
 
   if Vagrant.has_plugin?("vagrant-cachier")
     # Configure cached packages to be shared between instances of the same base box.
